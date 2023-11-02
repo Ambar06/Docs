@@ -4,7 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os, sys
-sys.path.insert(0, os.path.abspath('../codes'))
+sys.path.insert(0, os.path.abspath('./codes'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
