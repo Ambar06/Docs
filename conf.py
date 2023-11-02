@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath('../codes'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Documentation'
+project = 'ETA'
 copyright = '2023, Mohit Bagga, Ambar, Shiva'
 author = 'Mohit Bagga, Ambar, Shiva'
 
