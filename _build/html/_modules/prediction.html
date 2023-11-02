@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prediction &mdash; ETA  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ETA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">codes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">prediction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for prediction</h1><div class="highlight"><pre>
+<span></span>
+<div class="viewcode-block" id="PredictionLogic"><a class="viewcode-back" href="../prediction.html#prediction.PredictionLogic">[docs]</a><span class="k">class</span> <span class="nc">PredictionLogic</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Author(s): M.Bagga, Shiva</span>
+
+<span class="sd">    Description:</span>
+<span class="sd">    Class for handling Prediction related logics</span>
+<span class="sd">    (or) in simpler words, create / update Prediction Entries.</span>
+
+<span class="sd">    Attributes:</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    - updatePrediction --&gt; updates prediction entries</span>
+<span class="sd">    - startTrip        --&gt; get the prediction status for type &#39;START_TRIP&#39;</span>
+<span class="sd">    - midTrip          --&gt; get the prediction status for type &#39;MID_TRIP&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># @transaction.atomic</span>
+<div class="viewcode-block" id="PredictionLogic.updatePrediction"><a class="viewcode-back" href="../prediction.html#prediction.PredictionLogic.updatePrediction">[docs]</a>    <span class="k">def</span> <span class="nf">updatePrediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictionType</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author(s): M.Bagga, Shiva</span>
+
+<span class="sd">        Description:</span>
+<span class="sd">        Create or Update predictions</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - predictionType :</span>
+<span class="sd">        - predictions    : list of predictions; {</span>
+<span class="sd">                                             {&quot;tt_id&quot;: &quot;&quot;, &quot;prediction_data&quot;: {&quot;status&quot;: } },</span>
+<span class="sd">                                             {&quot;tt_id&quot;: &quot;&quot;, &quot;prediction_data&quot;: {&quot;status&quot;: } },</span>
+<span class="sd">                                             {&quot;tt_id&quot;: &quot;&quot;, &quot;prediction_data&quot;: {&quot;status&quot;: } }</span>
+<span class="sd">                                             }</span>
+
+<span class="sd">        Pseudocode:</span>
+<span class="sd">        1. Create or Update predictions for the current day and trip combination</span>
+<span class="sd">        2. returns None (nothing)</span>
+
+
+<span class="sd">        Input:</span>
+<span class="sd">        Output:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">trip</span><span class="p">,</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">predictions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
+            <span class="n">prediction</span> <span class="o">=</span> <span class="n">Prediction</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update_or_create</span><span class="p">(</span>
+                <span class="n">prediction_date</span><span class="o">=</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">(),</span>
+                <span class="n">time_table_id</span><span class="o">=</span><span class="n">trip</span><span class="p">,</span>
+                <span class="n">defaults</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;prediction_data&quot;</span><span class="p">:</span> <span class="n">prediction</span><span class="p">,</span>
+                    <span class="s2">&quot;prediction_action_id&quot;</span><span class="p">:</span> <span class="n">prediction</span><span class="p">[</span>
+                        <span class="s2">&quot;status&quot;</span>
+                    <span class="p">],</span>  <span class="c1"># --&gt; change to &quot;prediction_action__code&quot; (see model)</span>
+                <span class="p">},</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PredictionLogic.startTrip"><a class="viewcode-back" href="../prediction.html#prediction.PredictionLogic.startTrip">[docs]</a>    <span class="k">def</span> <span class="nf">startTrip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trip</span><span class="p">,</span> <span class="n">past_prediction</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author(s): M.Bagga, Shiva</span>
+
+<span class="sd">        Description:</span>
+<span class="sd">        get the prediction status for the START-TRIP time_table entry based on the current_position and past_prediction of the device/bus</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - trip             : timetable entry</span>
+<span class="sd">        - past_prediction  : past Prediction entry (dict)</span>
+<span class="sd">        - position         : Position object</span>
+<span class="sd">        - device           : device instance (obj)</span>
+
+<span class="sd">        Pseudocode:</span>
+<span class="sd">        1. if position isn&#39;t provided for the device:</span>
+<span class="sd">            - fetch the latest position obj for that device</span>
+<span class="sd">        2. get the status for the position&lt;--&gt;past_prediction combination</span>
+<span class="sd">            - use commonChecks(position, past_prediction)</span>
+<span class="sd">            - possible values are &#39;PASS&#39; / &#39;GPS_OFFLINE&#39; / &#39;NO_POSITION&#39;</span>
+<span class="sd">        3. if status=&#39;PASS&#39;:</span>
+<span class="sd">              return the status</span>
+<span class="sd">        4. Get the prediction data (STATUS) by calling checkMovement(current_position, past_prediction, next_adda_arrival_time)</span>
+<span class="sd">            - Note: for start trip, there&#39;s no next_to_next position and from_position</span>
+<span class="sd">        5. Prediction_data =&gt; OFFTRACK_MAX_DIST / OFFTRACK / WRONG_ROUTE / BUS_ADDA_SKIPPED / ON_TRACK</span>
+<span class="sd">        6. return prediction_data</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">position</span> <span class="ow">and</span> <span class="n">device</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="n">model_to_dict</span><span class="p">(</span>
+                    <span class="n">Position</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">latest</span><span class="p">(</span><span class="s2">&quot;servertime&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;Error fetching position for device : </span><span class="si">{d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">(),</span>
+                <span class="p">)</span>
+        <span class="n">commonCheck</span> <span class="o">=</span> <span class="n">PredictionUtils</span><span class="p">()</span><span class="o">.</span><span class="n">commonChecks</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">past_prediction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">commonCheck</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;PASS&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">commonCheck</span>
+        <span class="n">prediction_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Bus didn&#39;t travel on this route yesterday</span>
+        <span class="c1"># if trip[&#39;prev_day_arrival_time&#39;] is None:</span>
+        <span class="c1">#    prediction_data = {&#39;status&#39;: &quot;PREV_DAY&quot;}</span>
+        <span class="n">prediction_data</span> <span class="o">=</span> <span class="n">PredictionUtils</span><span class="p">()</span><span class="o">.</span><span class="n">checkMovement</span><span class="p">(</span>
+            <span class="n">position</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">trip</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">trip</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">},</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="n">past_prediction</span><span class="p">,</span>
+            <span class="n">trip</span><span class="p">[</span><span class="s2">&quot;actual_arrival_time&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">prediction_data</span></div>
+
+<div class="viewcode-block" id="PredictionLogic.midTrip"><a class="viewcode-back" href="../prediction.html#prediction.PredictionLogic.midTrip">[docs]</a>    <span class="k">def</span> <span class="nf">midTrip</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">position</span><span class="p">,</span>
+        <span class="n">to_timetable</span><span class="p">,</span>
+        <span class="n">from_timetable</span><span class="p">,</span>
+        <span class="n">to_next_timetable</span><span class="p">,</span>
+        <span class="n">past_prediction</span><span class="p">,</span>
+        <span class="n">device</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author(s): M.Bagga, Shiva</span>
+
+<span class="sd">        Description:</span>
+<span class="sd">        get the prediction status for MID-TRIP time_table entry based on the current_position and past_prediction of the device/bus</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - position          : current position entry</span>
+<span class="sd">        - to_timetable      : next timetable entry</span>
+<span class="sd">        - from_timetable    : start timetable entry</span>
+<span class="sd">        - to_next_timetable : next-to-next timetable entry</span>
+<span class="sd">        - past_prediction   : past prediction entry (having prediction data and position point)</span>
+<span class="sd">        - device            : device (obj)</span>
+
+<span class="sd">        Pseudocode:</span>
+<span class="sd">        1. if position isn&#39;t provided for the device:</span>
+<span class="sd">            - fetch the latest position obj for that device</span>
+<span class="sd">        2. get the status for the position&lt;--&gt;past_prediction combination</span>
+<span class="sd">            - use commonChecks(position, past_prediction)</span>
+<span class="sd">            - possible values are &#39;PASS&#39; / &#39;GPS_OFFLINE&#39; / &#39;NO_POSITION&#39;</span>
+<span class="sd">        3. if status=&#39;PASS&#39;:</span>
+<span class="sd">              return the status</span>
+<span class="sd">        4. if the to_timetable entry has no previous_day_arrival_time, then prediction_data[&quot;previous_day_travel&quot;] will be False</span>
+<span class="sd">        5. else get the prediction data (STATUS) by calling checkMovement:</span>
+<span class="sd">                - checkMovement(current_position, to_position, to_next_position, from_position, past_prediction, next_adda_arrival_time)</span>
+<span class="sd">                - Note: for Mid Trip, next_to_next_position and from_position exists (all these can be passed into checkMovement)</span>
+<span class="sd">        6. Prediction_data =&gt; OFFTRACK_MAX_DIST / OFFTRACK / WRONG_ROUTE / BUS_ADDA_SKIPPED / ON_TRACK</span>
+<span class="sd">        7. return prediction_data</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">position</span> <span class="ow">and</span> <span class="n">device</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="n">model_to_dict</span><span class="p">(</span>
+                    <span class="n">Position</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">latest</span><span class="p">(</span><span class="s2">&quot;servertime&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;Error fetching position for device : </span><span class="si">{d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">device</span><span class="p">),</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">(),</span>
+                <span class="p">)</span>
+        <span class="n">commonCheck</span> <span class="o">=</span> <span class="n">PredictionUtils</span><span class="p">()</span><span class="o">.</span><span class="n">commonChecks</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">past_prediction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">commonCheck</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;PASS&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">commonCheck</span>
+        <span class="n">prediction_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Bus didn&#39;t travel on this route yesterday</span>
+        <span class="k">if</span> <span class="n">to_timetable</span><span class="p">[</span><span class="s2">&quot;prev_day_arrival_time&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">prediction_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;prev_day_travel&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        <span class="n">prediction_data</span> <span class="o">=</span> <span class="n">PredictionUtils</span><span class="p">()</span><span class="o">.</span><span class="n">checkMovement</span><span class="p">(</span>
+            <span class="n">position</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">to_timetable</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">to_timetable</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">to_next_timetable</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">to_next_timetable</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">to_next_timetable</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">from_timetable</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">from_timetable</span><span class="p">[</span><span class="s2">&quot;stop_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">from_timetable</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">past_prediction</span><span class="p">,</span>
+            <span class="n">to_timetable</span><span class="p">[</span><span class="s2">&quot;actual_arrival_time&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">prediction_data</span></div>
+
+<div class="viewcode-block" id="PredictionLogic.calculateHistoricalETA"><a class="viewcode-back" href="../prediction.html#prediction.PredictionLogic.calculateHistoricalETA">[docs]</a>    <span class="k">def</span> <span class="nf">calculateHistoricalETA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus_number</span><span class="p">,</span> <span class="n">trip_number</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">timetable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author(s): M.Bagga, Shiva</span>
+
+<span class="sd">        Description:</span>
+<span class="sd">        calculates the HistoricalETA for given bus</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - bus_number        : bus_number (str)</span>
+<span class="sd">        - trip_number       : timetable id</span>
+<span class="sd">        - position          : current position obj (containing lat &amp; lon)</span>
+<span class="sd">        - to_next_timetable : next-to-next timetable entry</span>
+<span class="sd">        - timetable         : timetable entries as list (orderdby arrival_time)</span>
+
+<span class="sd">        Pseudocode:</span>
+<span class="sd">        1. Calculate the current_point using position.lat &amp; position.lon (use convertToPoint function)</span>
+<span class="sd">        2. Get the closest historical point to current_point</span>
+<span class="sd">            - fetch the BusRouteHistory objects for the bus_number and parallely add a distance field (i.e.</span>
+<span class="sd">                calculated distance between the historical_location &amp; current_location point fields)</span>
+<span class="sd">            - orderby distance field</span>
+<span class="sd">            - closest_historical_point_to_curr_pos = filter_result[0]</span>
+<span class="sd">        3. Get the closest historical point to Next Bus Adda</span>
+<span class="sd">            - next_bus_adda = timetable[0]</span>
+<span class="sd">            - calculate the next_bus_adda_point as convertToPoint(next_bus_adda[&#39;latitude&#39;], next_bus_adda[&#39;longitude&#39;])</span>
+<span class="sd">            - fetch the BusRouteHistory objects for the bus_number and parallely add a distance field (i.e.</span>
+<span class="sd">                calculated distance between the historical_location &amp; next_bus_adda_point fields)</span>
+<span class="sd">            - orderby distance field</span>
+<span class="sd">            - closest_historical_point_to_next_adda = filter_result[0]</span>
+
+<span class="sd">        4. Estimate the ETA to Next Bus Adda</span>
+<span class="sd">            4.1 Calculate estimated device time (in mins) as:</span>
+<span class="sd">                est_remaining_time = (closest_historical_point_to_next_adda[&quot;devicetime&quot;] - closest_historical_point_to_curr_pos[&quot;devicetime&quot;])</span>
+<span class="sd">            4.2 Calculate remaining time (in mins) to next bus adda:</span>
+<span class="sd">                remaining_time_mins = (next_bus_adda[&quot;actual_arrival_time&quot;] - current_time)</span>
+<span class="sd">            4.3 Calculate time difference (in mins)</span>
+<span class="sd">                time_diff_mins = estimated_device_time_mins - remaining_time_mins</span>
+
+<span class="sd">            4.4 if time_diff_mins falls within in 30 mins threshold:</span>
+<span class="sd">                    - return [True, time_diff_mins] --&gt; no ETA / Prediction Action</span>
+<span class="sd">                else (time_diff_mins crossed threshold):</span>
+<span class="sd">                    - create / update prediction entry with:</span>
+<span class="sd">                        - predicted_by status as &#39;UPDATE_ETA&#39;</span>
+<span class="sd">                        - prediction_action__code = &#39;OFFTRACK_MAX_TIME&#39;</span>
+<span class="sd">                        - prediction_data = {&quot;update_time_mins&quot;: time_diff_mins}</span>
+<span class="sd">                        - return [False, time_diff_mins]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Calculate closest point from Bus History to current position&quot;</span><span class="p">)</span>
+        <span class="n">curr_point</span> <span class="o">=</span> <span class="n">CommonUtils</span><span class="p">()</span><span class="o">.</span><span class="n">convertToPoint</span><span class="p">(</span>
+            <span class="n">position</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">closest_to_cur_pos</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">BusRouteHistory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">bus_number</span><span class="o">=</span><span class="n">bus_number</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="n">Distance</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="n">curr_point</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;distance&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="c1"># .annotate(closest_point=ClosestPoint(&quot;location&quot;,</span>
+        <span class="c1">#            Point(position[&#39;latitude&#39;], position[&#39;longitude&#39;]))).values()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Calculate closest point from Bus History to next bus adda&quot;</span><span class="p">)</span>
+        <span class="n">next_bus_adda</span> <span class="o">=</span> <span class="n">timetable</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">next_adda_point</span> <span class="o">=</span> <span class="n">CommonUtils</span><span class="p">()</span><span class="o">.</span><span class="n">convertToPoint</span><span class="p">(</span>
+            <span class="n">next_bus_adda</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span> <span class="n">next_bus_adda</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">closest_to_next_adda</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">BusRouteHistory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">bus_number</span><span class="o">=</span><span class="n">bus_number</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="n">Distance</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="n">next_adda_point</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;distance&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="c1"># annotate(closest_point=ClosestPoint(&quot;location&quot;, next_adda_point)).values()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimate eta to next bus adda&quot;</span><span class="p">)</span>
+        <span class="n">estimated_device_time_mins</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">closest_to_next_adda</span><span class="p">[</span><span class="s2">&quot;devicetime&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">closest_to_cur_pos</span><span class="p">[</span><span class="s2">&quot;devicetime&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">/</span> <span class="mi">60</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Remaining time in mins&quot;</span><span class="p">)</span>
+        <span class="n">remaining_time_mins</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">(),</span> <span class="n">next_bus_adda</span><span class="p">[</span><span class="s2">&quot;actual_arrival_time&quot;</span><span class="p">])</span>
+            <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">/</span> <span class="mi">60</span>
+        <span class="c1"># Check if time difference is within acceptable time diff range - 30 mins</span>
+        <span class="n">time_diff_mins</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">estimated_device_time_mins</span> <span class="o">-</span> <span class="n">remaining_time_mins</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">/</span> <span class="mi">60</span>
+        <span class="k">if</span> <span class="o">-</span><span class="mi">30</span> <span class="o">&lt;</span> <span class="n">time_diff_mins</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Update ETA : </span><span class="si">{mins}</span><span class="s2"> mins&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mins</span><span class="o">=</span><span class="n">time_diff_mins</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="n">time_diff_mins</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Max Threshold crossed (30 mins) for ETA : </span><span class="si">{mins}</span><span class="s2"> mins&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">mins</span><span class="o">=</span><span class="n">time_diff_mins</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">Prediction</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update_or_create</span><span class="p">(</span>
+                <span class="n">timetable_id</span><span class="o">=</span><span class="n">timetable</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                <span class="n">prediction_date</span><span class="o">=</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">(),</span>
+                <span class="n">predicted_by</span><span class="o">=</span><span class="n">Prediction</span><span class="o">.</span><span class="n">UPDATE_ETA</span><span class="p">,</span>
+                <span class="n">prediction_action</span><span class="o">=</span><span class="s2">&quot;OFFTRACK_MAX_TIME&quot;</span><span class="p">,</span>
+                <span class="n">prediction_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;update_time_mins&quot;</span><span class="p">:</span> <span class="n">time_diff_mins</span><span class="p">},</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">time_diff_mins</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mohit Bagga, Ambar, Shiva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
