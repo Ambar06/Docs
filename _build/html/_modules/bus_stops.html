@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bus_stops &mdash; Documentation  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=6698fa07"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">codes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">bus_stops</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for bus_stops</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="BusStopsUtils"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils">[docs]</a><span></span><span class="k">class</span> <span class="nc">BusStopsUtils</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Author: Ambar</span>
+<span class="sd">    This class handles bus stop data and operations.</span>
+<span class="sd">    PSEUDOCODE:</span>
+<span class="sd">    CLASS BusStopsUtils</span>
+<span class="sd">    Author: Ambar</span>
+<span class="sd">    Initialize BusStopsUtils instance with bus_number, from_date, to_date and config_data</span>
+
+<span class="sd">    FUNCTION haversine(lat1, lon1, lat2, lon2)</span>
+<span class="sd">        R = 6371000</span>
+<span class="sd">        Convert latitudes and longitudes to radians</span>
+<span class="sd">        Calculate dlat and dlon</span>
+<span class="sd">        Calculate a, c, and distance</span>
+<span class="sd">        RETURN distance</span>
+<span class="sd">    END FUNCTION</span>
+
+<span class="sd">    FUNCTION is_in_range(p1, p2, range)</span>
+<span class="sd">        Calculate the distance using haversine function</span>
+<span class="sd">        IF distance &lt;= range</span>
+<span class="sd">            PRINT &quot;True is_in_range&quot;</span>
+<span class="sd">            RETURN True</span>
+<span class="sd">        ELSE</span>
+<span class="sd">            PRINT &quot;False is_in_range&quot;</span>
+<span class="sd">            RETURN False</span>
+<span class="sd">        END IF</span>
+<span class="sd">    END FUNCTION</span>
+
+<span class="sd">    FUNCTION load_stop(data, api_type)</span>
+<span class="sd">        Set result and status attributes</span>
+<span class="sd">        Try to get StopStatus and Config objects</span>
+<span class="sd">        IF result is not None</span>
+<span class="sd">            IF api_type is &quot;mp_predicted&quot;</span>
+<span class="sd">                Create a list of PredictedStop objects with data</span>
+<span class="sd">            ELSE</span>
+<span class="sd">                Create a list of PredictedStop objects with different data</span>
+<span class="sd">            END IF</span>
+<span class="sd">            Bulk create PredictedStop objects</span>
+<span class="sd">            Get created entries&#39; IDs</span>
+<span class="sd">            PRINT created entry IDs</span>
+<span class="sd">            Write created entry IDs to a log file</span>
+<span class="sd">            RETURN created entry IDs</span>
+<span class="sd">        END IF</span>
+<span class="sd">        RETURN None</span>
+<span class="sd">    END FUNCTION</span>
+
+<span class="sd">    FUNCTION compare_mp_stop()</span>
+<span class="sd">        Create AnalysisData object</span>
+<span class="sd">        Get new_mp_stops and config_Data</span>
+<span class="sd">        IF new_mp_stops is not None</span>
+<span class="sd">            Set api_type to &quot;mp_predicted&quot;</span>
+<span class="sd">            Get old_mp_stops</span>
+<span class="sd">            Initialize new_records list</span>
+<span class="sd">            Iterate through new_mp_stops</span>
+<span class="sd">                Initialize check_range list</span>
+<span class="sd">                IF new_stop is in new_records</span>
+<span class="sd">                    Continue</span>
+<span class="sd">                IF new_stop is not None</span>
+<span class="sd">                    Convert new_stop to a point</span>
+<span class="sd">                    Iterate through old_mp_stops</span>
+<span class="sd">                        IF new_stop is in new_records</span>
+<span class="sd">                            Continue</span>
+<span class="sd">                        Convert old_stop to a point</span>
+<span class="sd">                        Calculate the result of is_in_range</span>
+<span class="sd">                        IF result is True</span>
+<span class="sd">                            PRINT &quot;It&#39;s in the range&quot;</span>
+<span class="sd">                            Append True to check_range</span>
+<span class="sd">                        ELSE</span>
+<span class="sd">                            PRINT &quot;It&#39;s not in the range...adding stop to the list.&quot;</span>
+<span class="sd">                            Append False to check_range</span>
+<span class="sd">                        END IF</span>
+<span class="sd">                    IF any(check_range) is True</span>
+<span class="sd">                        PRINT &quot;bus_number : {new_stop[&#39;bus_number&#39;]} has no new stop that is not in the range of {config_Data[&#39;geofence_radius&#39;]} meters from the previous stops.&quot;</span>
+<span class="sd">                        Continue</span>
+<span class="sd">                    ELSE</span>
+<span class="sd">                        Append new_stop to new_records</span>
+<span class="sd">                    END IF</span>
+<span class="sd">                ELSE</span>
+<span class="sd">                    PRINT &quot;new_stop was None&quot;</span>
+<span class="sd">                END IF</span>
+<span class="sd">            IF new_records length is greater than 0</span>
+<span class="sd">                Call load_stop with new_records and api_type</span>
+<span class="sd">                PRINT &quot;CREATED STOP ID&#39;S:&quot;, predicted_stops</span>
+<span class="sd">            ELSE</span>
+<span class="sd">                PRINT &quot;NO NEW STOPS CREATED&quot;</span>
+<span class="sd">            END IF</span>
+<span class="sd">        ELSE</span>
+<span class="sd">            PRINT &quot;new_mp_stops were None&quot;</span>
+<span class="sd">        END IF</span>
+<span class="sd">    END FUNCTION</span>
+
+<span class="sd">    FUNCTION compare_ab_stop()</span>
+<span class="sd">        Create AnalysisData object</span>
+<span class="sd">        Get new_ab_stops</span>
+<span class="sd">        IF new_ab_stops is not None</span>
+<span class="sd">            Set api_type to &quot;ab_predicted&quot;</span>
+<span class="sd">            Get old_ab_stops</span>
+<span class="sd">            Initialize new_records list</span>
+<span class="sd">            Iterate through new_ab_stops</span>
+<span class="sd">                Initialize check_range list</span>
+<span class="sd">                IF new_stop is in new_records</span>
+<span class="sd">                    Continue</span>
+<span class="sd">                IF new_stop is not None</span>
+<span class="sd">                    Convert new_stop to a point</span>
+<span class="sd">                    Iterate through old_ab_stops</span>
+<span class="sd">                        IF new_stop is in new_records</span>
+<span class="sd">                            Continue</span>
+<span class="sd">                        Convert old_stop to a point</span>
+<span class="sd">                        Calculate the result of is_in_range</span>
+<span class="sd">                        IF result is True</span>
+<span class="sd">                            PRINT &quot;It&#39;s in the range&quot;</span>
+<span class="sd">                            Append True to check_range</span>
+<span class="sd">                        ELSE</span>
+<span class="sd">                            PRINT &quot;It&#39;s not in the range...adding stop to the list.&quot;</span>
+<span class="sd">                            Append False to check_range</span>
+<span class="sd">                        END IF</span>
+<span class="sd">                    IF any(check_range) is True</span>
+<span class="sd">                        PRINT &quot;bus_number : {new_stop[&#39;bus_number&#39;]} has no new stop that is not in the range of {config_Data[&#39;geofence_radius&#39;]} meters from the previous stops.&quot;</span>
+<span class="sd">                        Continue</span>
+<span class="sd">                    ELSE</span>
+<span class="sd">                        Append new_stop to new_records</span>
+<span class="sd">                    END IF</span>
+<span class="sd">                ELSE</span>
+<span class="sd">                    PRINT &quot;new_stop was None&quot;</span>
+<span class="sd">                END IF</span>
+<span class="sd">            IF new_records length is greater than 0</span>
+<span class="sd">                PRINT check_range</span>
+<span class="sd">                Call load_stop with new_records and api_type</span>
+<span class="sd">                PRINT &quot;CREATED STOP ID&#39;S:&quot;, predicted_stops</span>
+<span class="sd">                PRINT &quot;Created&quot;</span>
+<span class="sd">            ELSE</span>
+<span class="sd">                PRINT &quot;NO NEW STOPS CREATED.&quot;</span>
+<span class="sd">            END IF</span>
+<span class="sd">        ELSE</span>
+<span class="sd">            PRINT &quot;new_ab_stops were None&quot;</span>
+<span class="sd">        END IF</span>
+<span class="sd">        END FUNCTION</span>
+<span class="sd">    END CLASS</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus_number</span><span class="p">,</span> <span class="n">from_date</span><span class="p">,</span> <span class="n">to_date</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author: Ambar</span>
+<span class="sd">        Initialize a BusStopsUtils instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            bus_number (str): The bus number for which you want to create new stops.</span>
+<span class="sd">            from_date (str): Start date to fetch existing records from the table.</span>
+<span class="sd">            to_date (str): End date to fetch existing records from the table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_Data</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;-created_at&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bus_number</span> <span class="o">=</span> <span class="n">bus_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_date</span> <span class="o">=</span> <span class="n">from_date</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_date</span> <span class="o">=</span> <span class="n">to_date</span>
+
+<div class="viewcode-block" id="BusStopsUtils.haversine"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.haversine">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">haversine</span><span class="p">(</span><span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span><span class="p">):</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="mi">6371000</span>
+        <span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">,</span> <span class="p">[</span><span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span><span class="p">])</span>
+        <span class="n">dlat</span> <span class="o">=</span> <span class="n">lat2</span> <span class="o">-</span> <span class="n">lat1</span>
+        <span class="n">dlon</span> <span class="o">=</span> <span class="n">lon2</span> <span class="o">-</span> <span class="n">lon1</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dlat</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dlon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">))</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="n">distance</span></div>
+
+<div class="viewcode-block" id="BusStopsUtils.is_in_range"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.is_in_range">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">is_in_range</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="nb">range</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author: Ambar</span>
+<span class="sd">        Check if two points are within a specified range.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            p1 (Point: tuple): The first point to check.</span>
+<span class="sd">            p2 (Point: tuple): The second point to check.</span>
+<span class="sd">            range (int): The maximum distance range.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the points are within the range, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span> <span class="o">=</span> <span class="n">p1</span>
+        <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span> <span class="o">=</span> <span class="n">p2</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">haversine</span><span class="p">(</span><span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;distance:&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="nb">range</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True is_in_range&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False is_in_range&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="BusStopsUtils.distance_to_decimal_degrees"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.distance_to_decimal_degrees">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">distance_to_decimal_degrees</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">latitude</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Source of formulae information:</span>
+<span class="sd">            1. https://en.wikipedia.org/wiki/Decimal_degrees</span>
+<span class="sd">            2. http://www.movable-type.co.uk/scripts/latlong.html</span>
+<span class="sd">        :param distance: an instance of `from django.contrib.gis.measure.Distance`</span>
+<span class="sd">        :param latitude: y - coordinate of a point/location</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lat_radians</span> <span class="o">=</span> <span class="n">latitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+        <span class="c1"># 1 longitudinal degree at the equator equal 111,319.5m equiv to 111.32km</span>
+        <span class="k">return</span> <span class="n">distance</span><span class="o">.</span><span class="n">m</span> <span class="o">/</span> <span class="p">(</span><span class="mf">111_319.5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">lat_radians</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BusStopsUtils.load_stop"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.load_stop">[docs]</a>    <span class="k">def</span> <span class="nf">load_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">api_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author: Ambar</span>
+<span class="sd">        Load new bus stops into the database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (DataFrame): The data to load into the database.</span>
+<span class="sd">            api_type (str): The type of API data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            created_entry_ids (list) or None: The result of the operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;created&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">StopStatus</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;-created_at&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">StopStatus</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">api_type</span> <span class="o">==</span> <span class="s2">&quot;mp_predicted&quot;</span><span class="p">:</span>
+                <span class="n">predicted_stops_objects</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">PredictedStop</span><span class="p">(</span>
+                        <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                        <span class="n">bus_number</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bus_number&quot;</span><span class="p">),</span>
+                        <span class="n">boarding_point</span><span class="o">=</span><span class="n">convertToPoint</span><span class="p">(</span>
+                            <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">),</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">latitude</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">),</span>
+                        <span class="n">longitude</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">),</span>
+                        <span class="n">duration</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stop_duration&quot;</span><span class="p">),</span>
+                        <span class="n">prediction_type</span><span class="o">=</span><span class="n">api_type</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+                <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predicted_stops_objects</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">PredictedStop</span><span class="p">(</span>
+                        <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                        <span class="n">bus_number</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bus_number&quot;</span><span class="p">),</span>
+                        <span class="n">boarding_point</span><span class="o">=</span><span class="n">convertToPoint</span><span class="p">(</span>
+                            <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">),</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">latitude</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">),</span>
+                        <span class="n">longitude</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">),</span>
+                        <span class="n">stop_name</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+                        <span class="n">prediction_type</span><span class="o">=</span><span class="n">api_type</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+                <span class="p">]</span>
+
+            <span class="n">created_objects</span> <span class="o">=</span> <span class="n">PredictedStop</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">bulk_create</span><span class="p">(</span><span class="n">predicted_stops_objects</span><span class="p">)</span>
+            <span class="n">created_entries</span> <span class="o">=</span> <span class="n">PredictedStop</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">id__in</span><span class="o">=</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">created_objects</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">created_entry_ids</span> <span class="o">=</span> <span class="n">created_entries</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">created_entry_ids</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+                <span class="s2">&quot;/home/ubuntu/prediction_dashboard_ambar/bus_stop/log_text.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">created_entry_ids</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="k">return</span> <span class="n">created_entry_ids</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="BusStopsUtils.compare_mp_stop"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.compare_mp_stop">[docs]</a>    <span class="k">def</span> <span class="nf">compare_mp_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author: Ambar</span>
+<span class="sd">        Compare and update bus stops using MP (MovingPandas) data and call load_stop method to load the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">analysis</span> <span class="o">=</span> <span class="n">AnalysisData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bus_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_date</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_date</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_mp_stops</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">predicted_data_stops</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_mp_stops</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">api_type</span> <span class="o">=</span> <span class="s2">&quot;mp_predicted&quot;</span>
+                <span class="n">old_mp_stops</span> <span class="o">=</span> <span class="n">PredictedStop</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">bus_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bus_number</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">new_records</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">new_stop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_mp_stops</span><span class="p">:</span>
+                    <span class="n">check_range</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">if</span> <span class="n">new_stop</span> <span class="ow">in</span> <span class="n">new_records</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">if</span> <span class="n">new_stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">new_stop</span><span class="p">)</span>
+                        <span class="n">p1</span> <span class="o">=</span> <span class="n">convertToPoint</span><span class="p">(</span>
+                            <span class="n">new_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                            <span class="n">new_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="p">)</span>
+                        <span class="k">for</span> <span class="n">old_stop</span> <span class="ow">in</span> <span class="n">old_mp_stops</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">new_stop</span> <span class="ow">in</span> <span class="n">new_records</span><span class="p">:</span>
+                                <span class="k">continue</span>
+                            <span class="n">p2</span> <span class="o">=</span> <span class="n">convertToPoint</span><span class="p">(</span>
+                                <span class="n">old_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                                <span class="n">old_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                            <span class="p">)</span>
+                            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_in_range</span><span class="p">(</span>
+                                <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_Data</span><span class="p">[</span><span class="s2">&quot;geofence_radius&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It&#39;s in the range&quot;</span><span class="p">)</span>
+                                <span class="n">check_range</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                                <span class="k">pass</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">check_range</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">check_range</span><span class="p">):</span>
+                            <span class="nb">print</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;bus_number : </span><span class="si">{</span><span class="n">new_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bus_number&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> has no new stop that is not in the range of</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config_Data</span><span class="p">[</span><span class="s1">&#39;geofence_radius&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> meters from the previous stops.&quot;</span>
+                            <span class="p">)</span>
+                            <span class="k">pass</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">new_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_stop</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new_stop was None&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_records</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">predicted_stops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_stop</span><span class="p">(</span><span class="n">new_records</span><span class="p">,</span> <span class="n">api_type</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CREATED STOP ID&#39;S:&quot;</span><span class="p">,</span> <span class="n">predicted_stops</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">auto_attach_stop</span><span class="p">(</span><span class="n">predicted_stops</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NO NEW STOPS CREATED&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new_mp_stops were None&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BusStopsUtils.compare_ab_stop"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.compare_ab_stop">[docs]</a>    <span class="k">def</span> <span class="nf">compare_ab_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Author: Ambar</span>
+<span class="sd">        Compare and update bus stops using AB (ApniBus) data.&quot;&quot;&quot;</span>
+        <span class="n">analysis</span> <span class="o">=</span> <span class="n">AnalysisData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bus_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_date</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_date</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_ab_stops</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">intersect_positions_cordinates</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_ab_stops</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">api_type</span> <span class="o">=</span> <span class="s2">&quot;ab_predicted&quot;</span>
+                <span class="n">old_ab_stops</span> <span class="o">=</span> <span class="n">PredictedStop</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">bus_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bus_number</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">new_records</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">new_stop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_ab_stops</span><span class="p">:</span>
+                    <span class="n">check_range</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">if</span> <span class="n">new_stop</span> <span class="ow">in</span> <span class="n">new_records</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">if</span> <span class="n">new_stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">new_stop</span><span class="p">)</span>
+                        <span class="n">p1_ab</span> <span class="o">=</span> <span class="n">convertToPoint</span><span class="p">(</span>
+                            <span class="n">new_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                            <span class="n">new_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="p">)</span>
+                        <span class="k">for</span> <span class="n">old_stop</span> <span class="ow">in</span> <span class="n">old_ab_stops</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">new_stop</span> <span class="ow">in</span> <span class="n">new_records</span><span class="p">:</span>
+                                <span class="k">continue</span>
+                            <span class="n">p2_ab</span> <span class="o">=</span> <span class="n">convertToPoint</span><span class="p">(</span>
+                                <span class="n">old_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                                <span class="n">old_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                            <span class="p">)</span>
+                            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_in_range</span><span class="p">(</span>
+                                <span class="n">p1_ab</span><span class="p">,</span> <span class="n">p2_ab</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_Data</span><span class="p">[</span><span class="s2">&quot;geofence_radius&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It&#39;s in the range&quot;</span><span class="p">)</span>
+                                <span class="n">check_range</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                                <span class="k">pass</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span>
+                                    <span class="s2">&quot;It&#39;s not in the range...adding stop to the list.&quot;</span>
+                                <span class="p">)</span>
+                                <span class="n">check_range</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">check_range</span><span class="p">):</span>
+                            <span class="nb">print</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;bus_number : </span><span class="si">{</span><span class="n">new_stop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bus_number&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> has no new stop that is not in the range of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config_Data</span><span class="p">[</span><span class="s1">&#39;geofence_radius&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> meters from the previous stops.&quot;</span>
+                            <span class="p">)</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Yeh nahi hoga&quot;</span><span class="p">)</span>
+                            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                            <span class="k">pass</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">new_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_stop</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new_stop was None&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_records</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">check_range</span><span class="p">)</span>
+                    <span class="n">predicted_stops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_stop</span><span class="p">(</span><span class="n">new_records</span><span class="p">,</span> <span class="n">api_type</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CREATED STOP ID&#39;S:&quot;</span><span class="p">,</span> <span class="n">predicted_stops</span><span class="p">)</span>
+                    <span class="c1"># with open(</span>
+                    <span class="c1">#   &quot;/home/ubuntu/prediction_dashboard_ambar/bus_stop/log_text.txt&quot;,</span>
+                    <span class="c1">#    &quot;w+&quot;,</span>
+                    <span class="c1"># ) as file:</span>
+                    <span class="c1">#   file.write(f&quot;{check_range} *********** \n\n {new_records}&quot;)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">compare_ab_stop</span><span class="p">(</span><span class="n">predicted_stops</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NO NEW STOPS CREATED.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new_ab_stops were None&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BusStopsUtils.auto_attach_stop"><a class="viewcode-back" href="../bus_stops.html#bus_stops.BusStopsUtils.auto_attach_stop">[docs]</a>    <span class="k">def</span> <span class="nf">auto_attach_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_stop</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">D</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config_Data</span><span class="p">[</span><span class="s2">&quot;geofence_radius&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">new_stop</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">predict_stop</span> <span class="o">=</span> <span class="n">PredictedStop</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">convertToPoint</span><span class="p">(</span><span class="n">predict_stop</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">predict_stop</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">PredictedStop</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="n">predict_stop</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance_to_decimal_degrees</span><span class="p">(</span>
+                <span class="n">distance</span><span class="p">,</span> <span class="n">predict_stop</span><span class="o">.</span><span class="n">longitude</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">predict_stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">status_obj</span> <span class="o">=</span> <span class="n">StopStatus</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_name</span><span class="o">=</span><span class="s2">&quot;auto_attached&quot;</span><span class="p">)</span>
+                    <span class="n">bus_stop</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">BusStop</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">geofence_area__dwithin</span><span class="o">=</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">distance</span><span class="p">))</span>
+                        <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;geofence_area&quot;</span><span class="p">)</span>
+                        <span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="n">bus_stop</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No Nearest Stop Found For PREDICTED STOP&quot;</span><span class="p">)</span>
+
+                <span class="n">predict_stop</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status_obj</span>
+                <span class="n">predict_stop</span><span class="o">.</span><span class="n">bus_stop</span> <span class="o">=</span> <span class="n">bus_stop</span>
+                <span class="n">predict_stop</span><span class="o">.</span><span class="n">stop_name</span> <span class="o">=</span> <span class="n">bus_stop</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">predict_stop</span><span class="o">.</span><span class="n">town_id</span> <span class="o">=</span> <span class="n">bus_stop</span><span class="o">.</span><span class="n">town_id</span>
+                <span class="n">predict_stop</span><span class="o">.</span><span class="n">town_name</span> <span class="o">=</span> <span class="n">bus_stop</span><span class="o">.</span><span class="n">town_name</span>
+                <span class="n">predict_stop</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div></div>
+
+
+
+
+<div class="viewcode-block" id="convertToPoint"><a class="viewcode-back" href="../bus_stops.html#bus_stops.convertToPoint">[docs]</a><span class="k">def</span> <span class="nf">convertToPoint</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lng</span><span class="p">):</span>
+    <span class="n">pnt</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lng</span><span class="p">)</span>
+    <span class="n">pnt</span><span class="o">.</span><span class="n">srid</span> <span class="o">=</span> <span class="mi">4326</span>
+    <span class="k">return</span> <span class="n">pnt</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="create_new_stops"><a class="viewcode-back" href="../bus_stops.html#bus_stops.create_new_stops">[docs]</a><span class="k">def</span> <span class="nf">create_new_stops</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Author: Ambar</span>
+<span class="sd">    This function creates new bus stops by performing the following steps:</span>
+
+<span class="sd">    1. Initializes a BusStatusCheck object (b_obj).</span>
+<span class="sd">    2. Retrieves the list of bus numbers (that do not have any record with &quot;created&quot; status) using the checkStatus method.</span>
+<span class="sd">    3. Retrieves the current date and time (today) and calculates the date</span>
+<span class="sd">       three days ago (three_days_back) and change them to str from datetime.</span>
+<span class="sd">    4. Iterates through each bus number in the list and performs the following actions:</span>
+<span class="sd">       a. Prints the bus number.</span>
+<span class="sd">       b. Initializes a BusStopsUtils object (bs_u) with the bus number and the date range</span>
+<span class="sd">          from three_days_back to today.</span>
+<span class="sd">       c. Calls the compare_mp_stop and compare_ab_stop methods of bs_u to compare and</span>
+<span class="sd">          create new bus stops.</span>
+
+<span class="sd">    This function is responsible for managing the creation of new bus stops based on</span>
+<span class="sd">    the below criteria for each bus number:</span>
+<span class="sd">        -&gt; The new_mp_stops and new_ab_stops are not in the range of config(decided) range.</span>
+
+<span class="sd">    Note: Ensure that the necessary classes and dependencies, such as BusStatusCheck and</span>
+<span class="sd">    BusStopsUtils, are properly defined and imported in your code.</span>
+
+<span class="sd">    PSEUDOCODE:</span>
+<span class="sd">    FUNCTION create_new_stops()</span>
+<span class="sd">    Author: Ambar</span>
+<span class="sd">    Initialize b_obj as BusStatusCheck</span>
+<span class="sd">    bus_list = b_obj.checkStatus()</span>
+<span class="sd">    today = current_date_and_time</span>
+<span class="sd">    three_days_back = calculate_three_days_back(today)</span>
+
+<span class="sd">    FOR each bus_number IN bus_list</span>
+<span class="sd">        PRINT bus_number</span>
+<span class="sd">        bs_u = initialize BusStopsUtils with bus_number, three_days_back, and today</span>
+<span class="sd">        bs_u.compare_mp_stop()</span>
+<span class="sd">        bs_u.compare_ab_stop()</span>
+<span class="sd">        PRINT &quot;DONE&quot;</span>
+
+<span class="sd">    PRINT &quot;Process Completed!&quot;</span>
+<span class="sd">    END FUNCTION</span>
+
+<span class="sd">    FUNCTION calculate_three_days_back(current_date)</span>
+<span class="sd">        three_days_ago = subtract 3 days from current_date</span>
+<span class="sd">        three_days_ago = format three_days_ago as a string in &quot;YYYY-MM-DD&quot; format</span>
+<span class="sd">        RETURN three_days_ago</span>
+<span class="sd">    END FUNCTION</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b_obj</span> <span class="o">=</span> <span class="n">BusStatusCheck</span><span class="p">()</span>
+    <span class="n">bus_list</span> <span class="o">=</span> <span class="n">b_obj</span><span class="o">.</span><span class="n">checkStatus</span><span class="p">()</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">two_days_back</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">two_days_back</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">two_days_back</span><span class="p">),</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">two_days_back</span> <span class="o">=</span> <span class="n">two_days_back</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">bus_number</span> <span class="ow">in</span> <span class="n">bus_list</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bus_number</span><span class="p">)</span>
+        <span class="n">bs_u</span> <span class="o">=</span> <span class="n">BusStopsUtils</span><span class="p">(</span><span class="n">bus_number</span><span class="p">,</span> <span class="n">two_days_back</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+        <span class="n">bs_u</span><span class="o">.</span><span class="n">compare_mp_stop</span><span class="p">()</span>
+        <span class="n">bs_u</span><span class="o">.</span><span class="n">compare_ab_stop</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DONE&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Process Completed!&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mohit Bagga, Ambar, Shiva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
